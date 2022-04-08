@@ -1,3 +1,4 @@
+
 # Заброс на один столбец таблицы 
 SELECT last_name FROM people;
 
@@ -16,3 +17,8 @@ SELECT id, last_name FROM people ORDER BY id
 
 # выборка с условием и сортировкой 
 SELECT * FROM worker Where gender = 'Male' ORDER BY first_name
+
+
+# выборка с JOIN 
+SELECT worker_id, worker.first_name, worker.last_name FROM general_table 
+LEFT JOIN worker ON worker.id = general_table.worker_id 
