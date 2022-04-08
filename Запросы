@@ -1,0 +1,18 @@
+# Заброс на один столбец таблицы 
+SELECT last_name FROM people;
+
+# Запрос на все столбцы таблицы
+SELECT * FROM people;
+
+# Выборка двух колонок таблицы
+SELECT last_name, address, phone  FROM people;
+
+# обновление данных в таблице 
+UPDATE people SET last_name = 'Maks' WHERE id = 1;
+UPDATE people SET last_name = 'Maksimka' WHERE id = 2;
+
+# проверка обновленных данных
+SELECT id, last_name FROM people ORDER BY id
+
+# выборка с условием и сортировкой 
+SELECT * FROM worker Where gender = 'Male' ORDER BY first_name
