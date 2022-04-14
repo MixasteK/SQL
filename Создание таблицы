@@ -17,3 +17,14 @@ CREATE TABLE general_table
 	summ VARCHAR(20) NOT NULL,
   date DATE NOT NULL  
 );
+
+# обновление данных в таблице 
+UPDATE general_table SET people_id = 15 WHERE id = 1;
+
+# добавление столбца в таблицу 
+ALTER TABLE worker ADD note VARCHAR(255);
+
+# удаление таблицы
+DROP TABLE people;  
+
+
