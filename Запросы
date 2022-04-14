@@ -22,3 +22,16 @@ SELECT * FROM worker Where gender = 'Male' ORDER BY first_name
 # выборка с JOIN 
 SELECT worker_id, worker.first_name, worker.last_name FROM general_table 
 LEFT JOIN worker ON worker.id = general_table.worker_id 
+
+# выборка с BETWEEN
+SELECT * FROM people WHERE id between 10 and 20;
+
+# выборка первых 10 записей
+SELECT * FROM people LIMIT 10;
+
+# выборка с Aliases
+SELECT first_name AS name_people, phone AS num FROM people;
+
+# выборка с LIKE 
+SELECT email FROM worker WHERE email LIKE '%.com';
+
