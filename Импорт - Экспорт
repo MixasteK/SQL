@@ -32,8 +32,7 @@ SYBD=# \d
  pg_dump -Fc -v --host=localhost --username=postgres --dbname=SYBD -f dumpSQL.dump
  
  
- # импортировал резервную копию 
- 
+ # импортировал резервную копию  
  pg_restore -v --no-owner --host=localhost --username=postgres --dbname=123 dumpSQL.dump
  123=# \d
                   List of relations
