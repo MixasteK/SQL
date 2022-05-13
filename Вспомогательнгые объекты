@@ -36,21 +36,23 @@ CALL Add_worker('Maks', 'Daven', 'maks@gmail.com', 'Male', +79457892536);
 
 
 
-CREATE OR REPLACE FUNCTION test(id uuid)
-  RETURNS INTEGER
-  LANGUAGE plpgsql
+
+--- ФУНКЦИЯ
+# создание функции 
+
+  CREATE FUNCTION worker_sex
+      (@sex nvarchar (30))
+RETURNS TABLE
 AS
-$$
-declare
-  count integer;
-begin
-  count = (SELECT count(*)            
-           FROM worker
-           WHERE gender = 'Famale');
-  return count;
+RETURN 
+     (
+     SELECT * FROM worker
+         WHERE gender = @sex
+     )
 end;
  
 $$
 
+SELECT * FROM worker_sex ('Famale')
 
 
