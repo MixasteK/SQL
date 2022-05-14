@@ -1,0 +1,2 @@
+# SQL
+СУБД postgresql
