@@ -80,3 +80,34 @@ _______________________________________________
  $795816.70
 (2 rows)
 _______________________________________________
+
+
+
+## Создаю триггерную функцию и триггер
+
+CREATE OR REPLACE FUNCTION new_worker_function()
+  RETURNS trigger AS $BODY$
+BEGIN
+  NEW.new_worker := 1;
+  RETURN NEW;
+END $BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER new_worker_trigger
+BEFORE INSERT
+ON worker
+FOR EACH ROW
+EXECUTE PROCEDURE new_worker_function();
+
+
+# добавил 5 новых работников, триггер изменил значение new_worker с 0 на 1
+
+ SELECT * FROM worker WHERE new_worker = 1;
+ id  | first_name | last_name |      email       | gender |    phone     | new_worker
+-----+------------+-----------+------------------+--------+--------------+------------
+ 102 | Artyro     | Byrito    | coffe@gmail.com  | Male   | +79821457252 |          1
+ 108 | Maks       | Byrito    | tea@gmail.com    | Male   | +77771540232 |          1
+ 111 | Maruno     | Talete    | kara@gmail.com   | Male   | +77771540230 |          1
+ 112 | Amino      | Talete    | karala@gmail.com | Male   | +77771540270 |          1
+ 113 | Teftele    | Talete    | las@gmail.com    | Male   | +77747540230 |          1
+(5 rows)
