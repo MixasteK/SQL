@@ -38,21 +38,45 @@ CALL Add_worker('Maks', 'Daven', 'maks@gmail.com', 'Male', +79457892536);
 
 
 --- ФУНКЦИЯ
-# создание функции 
 
-  CREATE FUNCTION worker_sex
-      (@sex nvarchar (30))
-RETURNS TABLE
-AS
-RETURN 
-     (
-     SELECT * FROM worker
-         WHERE gender = @sex
-     )
-end;
- 
+# функция возвращает имена работников 
+CREATE FUNCTION worker_sex (sex varchar (30))
+RETURNS SETOF character AS 
+$$     
+     SELECT first_name FROM worker
+         WHERE gender = $1
 $$
-
-SELECT * FROM worker_sex ('Famale')
-
-
+LANGUAGE sql
+# вызов функции 
+SELECT worker_sex('Female') AS name;
+____________________________________
+name
+-------------
+ Florance
+ Erda
+ Paulette
+ Cami
+ Alli
+ Bianca
+ Nanette
+...
+(40 rows)
+____________________________________
+ 
+ 
+# функция ввозвращает размер вклада(вкладов) за указанную дату.
+CREATE FUNCTION date_open_deposit(dates date)
+RETURNS TABLE (summ varchar(30)) AS
+$$
+	SELECT summ FROM general_table WHERE date = $1
+$$
+LANGUAGE sql;
+# вызов функции 
+SELECT date_open_deposit('2021-02-17');
+_______________________________________________
+ date_open_deposit
+-------------------
+ $286590.92
+ $795816.70
+(2 rows)
+_______________________________________________
