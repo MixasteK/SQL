@@ -1,0 +1,44 @@
+# Создание таблицы 
+CREATE TABLE deposit
+(
+	id SERIAL PRIMARY KEY,
+	type VARCHAR(100) NOT NULL,
+	percent INTEGER NOT NULL
+);
+
+
+# Создание таблицы с F.key
+CREATE TABLE general_table
+(
+	id SERIAL PRIMARY KEY,
+	worker_id INTEGER REFERENCES worker(id),
+  	people_id INTEGER REFERENCES people(id),
+  	deposit_id INTEGER REFERENCES deposit(id),
+	summ VARCHAR(20) NOT NULL,
+  	date DATE NOT NULL  
+);
+
+CREATE TABLE people
+(
+	id SERIAL PRIMARY KEY,
+	first_name VARCHAR(50)NOT NULL,
+	last_name VARCHAR(50)NOT NULL,
+	phone VARCHAR(50)NOT NULL,
+	passport_num VARCHAR(50)NOT NULL,
+	address VARCHAR(50)NOT NULL
+);
+
+CREATE TABLE worker
+(
+	id SERIAL PRIMARY KEY,
+	first_name VARCHAR(50)NOT NULL,
+	last_name VARCHAR(50)NOT NULL,
+	email VARCHAR(50)NOT NULL,
+	gender VARCHAR(50)NOT NULL,
+	phone VARCHAR(50)NOT NULL,	
+	check_integrity INT NOT NULL
+);
+
+
+# удаление таблицы
+DROP TABLE people;  

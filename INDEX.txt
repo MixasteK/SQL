@@ -1,0 +1,68 @@
+
+### Запрос без индексов
+
+SYBD=# EXPLAIN SELECT * FROM people WHERE lower(first_name) = 'brig' AND lower(last_name) = 'maks';
+                                              QUERY PLAN
+------------------------------------------------------------------------------------------------------
+ Seq Scan on people  (cost=0.00..20.00 rows=1 width=65)
+   Filter: ((lower((first_name)::text) = 'brig'::text) AND (lower((last_name)::text) = 'maks'::text))
+(2 rows)
+
+Time: 0,488 ms
+
+
+### Создал индекс
+
+CREATE INDEX people_index_fio
+ON people (lower(first_name), lower(last_name));
+
+
+### Запрос с индексом, в результате видно что для поиска использовался индекс  people_index_fio
+
+SYBD=# EXPLAIN SELECT * FROM people WHERE lower(first_name) = 'brig' AND lower(last_name) = 'maks';
+                                                QUERY PLAN
+----------------------------------------------------------------------------------------------------------
+ Index Scan using people_index_fio on people  (cost=0.28..8.29 rows=1 width=65)
+   Index Cond: ((lower((first_name)::text) = 'brig'::text) AND (lower((last_name)::text) = 'maks'::text))
+(2 rows)
+
+Time: 0,399 ms
+
+
+
+========================================================================================================================
+
+
+
+### Запрос без индексов
+
+SYBD=# EXPLAIN SELECT * FROM people WHERE passport_num = '9019279859';
+                       QUERY PLAN
+--------------------------------------------------------
+ Seq Scan on people  (cost=0.00..15.50 rows=1 width=65)
+   Filter: ((passport_num)::text = '9019279859'::text)
+(2 rows)
+
+Time: 0,606 ms
+
+
+### Создал индекс
+
+SYBD=# CREATE INDEX people_index_passport_num
+ON people (passport_num);
+
+
+
+
+### Запрос с индексом, в результате видно что для поиска использовался индекс  people_index_passport_num
+
+SYBD=# EXPLAIN SELECT * FROM people WHERE passport_num = '9019279859';
+                                       QUERY PLAN
+-----------------------------------------------------------------------------------------
+ Index Scan using people_index_passport_num on people  (cost=0.28..8.29 rows=1 width=65)
+   Index Cond: ((passport_num)::text = '9019279859'::text)
+(2 rows)
+
+Time: 0,419 ms
+
+

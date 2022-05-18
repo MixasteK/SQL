@@ -1,0 +1,76 @@
+### Просмотр текущей роли
+
+SELECT session_user; -- session user name
+
+
+
+### Создал роль без привелегий, роль ни может вносить изменения в базу данных. Роль активна до 2023-09-23 | 20:03:42
+
+CREATE ROLE maks_test WITH
+ LOGIN
+ NOSUPERUSER
+ NOCREATEDB
+ NOCREATEROLE
+ NOINHERIT
+ NOREPLICATION
+ CONNECTION LIMIT -1
+ VALID UNTIL '2023-09-23T20:03:42+03:00'
+ PASSWORD '123';
+
+
+### Просмотрел список ролей.
+
+SYBD=# \du                                    List of roles
+  Role name  |                         Attributes                         | Member of
+-------------+------------------------------------------------------------+-----------
+ hidden_user | Cannot login                                               | {}
+ maks_test   | No inheritance                                            +| {}
+             | Password valid until 2023-09-23 20:03:42+03                |
+ postgres    | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
+
+
+================================================================================================
+### Создал роль temporary_user с правами входа, создания потоковой репликации и резервного копирования. Лимит подключений задал 20
+
+CREATE ROLE temporary_user WITH
+	LOGIN
+	NOSUPERUSER
+	NOCREATEDB
+	NOCREATEROLE
+	INHERIT
+	REPLICATION
+	CONNECTION LIMIT 20
+	PASSWORD '321';
+
+SYBD=# \du
+                                      List of roles
+   Role name    |                         Attributes                         | Member of
+----------------+------------------------------------------------------------+-----------
+ hidden_user    | Cannot login                                               | {}
+ maks_test      | No inheritance                                            +| {}
+                | Password valid until 2023-09-23 20:03:42+03                |
+ postgres       | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
+ temporary_user | Replication                                               +| {}
+                | 20 connections                                             |
+
+
+
+### Изменил лимит подключения с 20 на 100
+
+SYBD=# ALTER ROLE temporary_user WITH CONNECTION LIMIT 100;
+ALTER ROLE
+Time: 2,065 ms
+SYBD=# \du
+     
+    
+                             List of roles
+   Role name    |                         Attributes                         | Member of
+----------------+------------------------------------------------------------+-----------
+ hidden_user    | Cannot login                                               | {}
+ maks_test      | No inheritance                                            +| {}
+                | Password valid until 2023-09-23 20:03:42+03                |
+ postgres       | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
+ temporary_user | Replication                                               +| {}
+                | 100 connections                                            |
+
+

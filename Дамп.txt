@@ -1,0 +1,49 @@
+# создание Dump 
+В графическом интерфейсе pgadmin4 создал резервную копию базы данных
+в доп. настройках резервной копии выбрал формат и указал имя файла 
+--[!] резервная копия создана
+
+# импорт дампа
+В графическом интерфейсе pgadmin4 создал новую базу данных "SYBD(Dump)"
+Далее открыл файл резервной копии, выполнил запрос. 
+--[!] импорт произведен 
+
+
+
+#######################################################################
+
+# пордключился к базе через командную строку.
+SYBD=# \d
+                  List of relations
+ Schema |         Name         |   Type   |  Owner
+--------+----------------------+----------+----------
+ public | deposit              | table    | postgres
+ public | deposit_id_seq       | sequence | postgres
+ public | general_table        | table    | postgres
+ public | general_table_id_seq | sequence | postgres
+ public | people               | table    | postgres
+ public | people_id_seq        | sequence | postgres
+ public | worker               | table    | postgres
+ public | worker_id_seq        | sequence | postgres
+(8 rows)
+
+
+# сделал резервную копию базы данных
+ pg_dump -Fc -v --host=localhost --username=postgres --dbname=SYBD -f dumpSQL.dump
+ 
+ 
+ # импортировал резервную копию  
+ pg_restore -v --no-owner --host=localhost --username=postgres --dbname=123 dumpSQL.dump
+ 123=# \d
+                  List of relations
+ Schema |         Name         |   Type   |  Owner
+--------+----------------------+----------+----------
+ public | deposit              | table    | postgres
+ public | deposit_id_seq       | sequence | postgres
+ public | general_table        | table    | postgres
+ public | general_table_id_seq | sequence | postgres
+ public | people               | table    | postgres
+ public | people_id_seq        | sequence | postgres
+ public | worker               | table    | postgres
+ public | worker_id_seq        | sequence | postgres
+(8 rows)

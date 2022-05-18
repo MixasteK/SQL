@@ -1,0 +1,31 @@
+SYBD=#  SELECT MIN(date) AS Дата_первого_вклада,  MAX(date) AS Дата_последнего_вклада,
+COUNT(date) AS Всего_вкладов FROM general_table;
+ Дата_первого_вклада | Дата_последнего_вклада | Всего_вкладов
+---------------------+------------------------+---------------
+ 2015-05-16          | 2022-12-29             |          1901
+(1 row)
+
+
+SYBD=# SELECT count(gender) FROM worker
+WHERE gender = 'Male';
+ count
+-------
+    57
+(1 row)
+
+
+
+SYBD=# SYBD=# SELECT first_name, last_name, email FROM worker ORDER BY first_name LIMIT 10;
+ first_name | last_name |            email
+------------+-----------+-----------------------------
+ 123Maks    | Byrito    | tea@gmail.com
+ Adda       | Sillis    | asillis4@biblegateway.com
+ Addy       | Aujean    | aaujean24@prnewswire.com
+ Aili       | Addey     | aaddeyn@cbsnews.com
+ Alli       | Radeliffe | aradeliffee@google.nl
+ Amino      | Talete    | karala@gmail.com
+ Ariella    | Blasio    | ablasio1c@delicious.com
+ Arne       | Nockalls  | anockalls9@businesswire.com
+ Artyro     | Byrito    | coffe@gmail.com
+ Aryn       | Proske    | aproske1k@cbsnews.com
+(10 rows)
